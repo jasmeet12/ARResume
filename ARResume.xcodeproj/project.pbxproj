@@ -15,6 +15,15 @@
 		5D3517DC201C14C2006A9A07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D3517DA201C14C2006A9A07 /* LaunchScreen.storyboard */; };
 		5D3517E7201C14C2006A9A07 /* ARResumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3517E6201C14C2006A9A07 /* ARResumeTests.swift */; };
 		5D3517F2201C14C2006A9A07 /* ARResumeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3517F1201C14C2006A9A07 /* ARResumeUITests.swift */; };
+		5D4BEB8A201F9B870008BCE8 /* Blur.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D4BEB89201F9B870008BCE8 /* Blur.png */; };
+		5D4BEB8C201F9F1A0008BCE8 /* SCNode+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4BEB8B201F9F1A0008BCE8 /* SCNode+Text.swift */; };
+		5D77EAE22024E9920030F310 /* SKTextureGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE12024E9920030F310 /* SKTextureGradient.swift */; };
+		5D77EAE32024E9920030F310 /* SKTextureGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE12024E9920030F310 /* SKTextureGradient.swift */; };
+		5D77EAE42024E9920030F310 /* SKTextureGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE12024E9920030F310 /* SKTextureGradient.swift */; };
+		5D77EAE6202565430030F310 /* SKMultilineLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE5202565430030F310 /* SKMultilineLabels.swift */; };
+		5D77EAE7202565430030F310 /* SKMultilineLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE5202565430030F310 /* SKMultilineLabels.swift */; };
+		5D77EAE8202565430030F310 /* SKMultilineLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE5202565430030F310 /* SKMultilineLabels.swift */; };
+		5DAD1F98202A2612001A5160 /* FirstSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD1F97202A2612001A5160 /* FirstSKScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +58,11 @@
 		5D3517ED201C14C2006A9A07 /* ARResumeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARResumeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D3517F1201C14C2006A9A07 /* ARResumeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARResumeUITests.swift; sourceTree = "<group>"; };
 		5D3517F3201C14C2006A9A07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D4BEB89201F9B870008BCE8 /* Blur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Blur.png; path = Assets.xcassets/Blur.imageset/Blur.png; sourceTree = "<group>"; };
+		5D4BEB8B201F9F1A0008BCE8 /* SCNode+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNode+Text.swift"; sourceTree = "<group>"; };
+		5D77EAE12024E9920030F310 /* SKTextureGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTextureGradient.swift; sourceTree = "<group>"; };
+		5D77EAE5202565430030F310 /* SKMultilineLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKMultilineLabels.swift; sourceTree = "<group>"; };
+		5DAD1F97202A2612001A5160 /* FirstSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstSKScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +116,15 @@
 				5D3517CF201C14C1006A9A07 /* AppDelegate.swift */,
 				5D3517D1201C14C2006A9A07 /* art.scnassets */,
 				5D3517D3201C14C2006A9A07 /* ViewController.swift */,
+				5DAD1F97202A2612001A5160 /* FirstSKScene.swift */,
+				5D77EAE5202565430030F310 /* SKMultilineLabels.swift */,
+				5D4BEB8B201F9F1A0008BCE8 /* SCNode+Text.swift */,
+				5D77EAE12024E9920030F310 /* SKTextureGradient.swift */,
 				5D3517D5201C14C2006A9A07 /* Main.storyboard */,
 				5D3517D8201C14C2006A9A07 /* Assets.xcassets */,
 				5D3517DA201C14C2006A9A07 /* LaunchScreen.storyboard */,
 				5D3517DD201C14C2006A9A07 /* Info.plist */,
+				5D4BEB89201F9B870008BCE8 /* Blur.png */,
 			);
 			path = ARResume;
 			sourceTree = "<group>";
@@ -237,6 +256,7 @@
 			files = (
 				5D3517D2201C14C2006A9A07 /* art.scnassets in Resources */,
 				5D3517DC201C14C2006A9A07 /* LaunchScreen.storyboard in Resources */,
+				5D4BEB8A201F9B870008BCE8 /* Blur.png in Resources */,
 				5D3517D9201C14C2006A9A07 /* Assets.xcassets in Resources */,
 				5D3517D7201C14C2006A9A07 /* Main.storyboard in Resources */,
 			);
@@ -263,8 +283,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D4BEB8C201F9F1A0008BCE8 /* SCNode+Text.swift in Sources */,
+				5DAD1F98202A2612001A5160 /* FirstSKScene.swift in Sources */,
 				5D3517D4201C14C2006A9A07 /* ViewController.swift in Sources */,
 				5D3517D0201C14C1006A9A07 /* AppDelegate.swift in Sources */,
+				5D77EAE22024E9920030F310 /* SKTextureGradient.swift in Sources */,
+				5D77EAE6202565430030F310 /* SKMultilineLabels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +297,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D3517E7201C14C2006A9A07 /* ARResumeTests.swift in Sources */,
+				5D77EAE32024E9920030F310 /* SKTextureGradient.swift in Sources */,
+				5D77EAE7202565430030F310 /* SKMultilineLabels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +307,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D3517F2201C14C2006A9A07 /* ARResumeUITests.swift in Sources */,
+				5D77EAE42024E9920030F310 /* SKTextureGradient.swift in Sources */,
+				5D77EAE8202565430030F310 /* SKMultilineLabels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

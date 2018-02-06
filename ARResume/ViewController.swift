@@ -10,9 +10,13 @@ import UIKit
 import SceneKit
 import ARKit
 
+
+
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    
+  //
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +28,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+            createObject()
         
-        // Set the scene to the view
-        sceneView.scene = scene
     }
+    
+    
+    
+    func createObject(){
+        
+        let scene = SCNScene()
+        let skScene = SKScene(size: CGSize(width: 200, height: 200))
+       let firstSkScene = FirstSKScene(size: CGSize(width: 200, height: 200))
+        //createskScene(skScene: skScene)
+        let plane = SCNPlane(width: 0.35, height: 0.25)
+        
+        let material = SCNMaterial()
+        material.isDoubleSided = true
+        material.diffuse.contents = firstSkScene
+        material.diffuse.contentsTransform = SCNMatrix4MakeScale(1,-1,1);
+        material.diffuse.wrapT = SCNWrapMode.repeat
+        plane.materials = [material]
+       
+        let node = SCNNode(geometry: plane)
+        node.position = SCNVector3(x:0,y:0,z:-0.6)
+       
+        scene.rootNode.addChildNode(node)
+        
+        //labelNode.run(SKAction.repeat(SKAction.rotate(byAngle: .pi, duration: 2), count: 1))
+        sceneView.scene = scene
+        
+    }
+    
+   
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,3 +109,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
 }
+
