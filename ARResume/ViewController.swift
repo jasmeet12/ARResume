@@ -12,10 +12,14 @@ import ARKit
 
 
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate,finishSKSceneDelegate {
+    
+    
 
     @IBOutlet var sceneView: ARSCNView!
-    
+    var scene:SCNScene!
+    var plane:SCNPlane!
+    var node:SCNNode!
   //
     
     override func viewDidLoad() {
@@ -28,19 +32,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-            createObject()
+        createSceneKitScene()
         
     }
     
     
     
-    func createObject(){
+    func createFirstScene(){
         
-        let scene = SCNScene()
-        let skScene = SKScene(size: CGSize(width: 200, height: 200))
+        
+        
        let firstSkScene = FirstSKScene(size: CGSize(width: 200, height: 200))
-        //createskScene(skScene: skScene)
-        let plane = SCNPlane(width: 0.35, height: 0.25)
+        firstSkScene.delgate = self
         
         let material = SCNMaterial()
         material.isDoubleSided = true
@@ -48,17 +51,58 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         material.diffuse.contentsTransform = SCNMatrix4MakeScale(1,-1,1);
         material.diffuse.wrapT = SCNWrapMode.repeat
         plane.materials = [material]
-       
-        let node = SCNNode(geometry: plane)
+        
+        node = SCNNode(geometry: plane)
         node.position = SCNVector3(x:0,y:0,z:-0.6)
-       
         scene.rootNode.addChildNode(node)
         
-        //labelNode.run(SKAction.repeat(SKAction.rotate(byAngle: .pi, duration: 2), count: 1))
-        sceneView.scene = scene
+        //plane.materials.first?.diffuse.contents = firstSkScene
+        //createskScene(skScene: skScene)
+       
         
     }
     
+    func createSceneKitScene(){
+        
+        scene = SCNScene()
+        plane = SCNPlane(width: 0.35, height: 0.25)
+        
+       
+        //labelNode.run(SKAction.repeat(SKAction.rotate(byAngle: .pi, duration: 2), count: 1))
+        sceneView.scene = scene
+        
+        createFirstScene()
+        
+    }
+    
+    func createIntroductionScene(){
+        
+        let introScene = IntroductionSKScene(size: CGSize(width: 200, height: 200))
+        let material = SCNMaterial()
+        material.isDoubleSided = true
+        material.diffuse.contents = introScene
+        material.diffuse.contentsTransform = SCNMatrix4MakeScale(1,-1,1);
+        material.diffuse.wrapT = SCNWrapMode.repeat
+        plane.materials = [material]
+        
+        node = SCNNode(geometry: plane)
+        node.position = SCNVector3(x:0,y:0,z:-0.6)
+        scene.rootNode.addChildNode(node)
+      
+        
+        
+        
+        
+        
+    }
+    
+    func completedFirstScene() {
+        createIntroductionScene()
+    }
+    
+    func completedIntroductionScene() {
+        createIntroductionScene()
+    }
    
     
     override func viewWillAppear(_ animated: Bool) {

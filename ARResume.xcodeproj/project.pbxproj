@@ -24,6 +24,7 @@
 		5D77EAE7202565430030F310 /* SKMultilineLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE5202565430030F310 /* SKMultilineLabels.swift */; };
 		5D77EAE8202565430030F310 /* SKMultilineLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77EAE5202565430030F310 /* SKMultilineLabels.swift */; };
 		5DAD1F98202A2612001A5160 /* FirstSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD1F97202A2612001A5160 /* FirstSKScene.swift */; };
+		5DAD1F9A202A9CA5001A5160 /* IntroductionSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD1F99202A9CA5001A5160 /* IntroductionSKScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5D77EAE12024E9920030F310 /* SKTextureGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTextureGradient.swift; sourceTree = "<group>"; };
 		5D77EAE5202565430030F310 /* SKMultilineLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKMultilineLabels.swift; sourceTree = "<group>"; };
 		5DAD1F97202A2612001A5160 /* FirstSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstSKScene.swift; sourceTree = "<group>"; };
+		5DAD1F99202A9CA5001A5160 /* IntroductionSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionSKScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				5D3517CF201C14C1006A9A07 /* AppDelegate.swift */,
 				5D3517D1201C14C2006A9A07 /* art.scnassets */,
 				5D3517D3201C14C2006A9A07 /* ViewController.swift */,
+				5DAD1F99202A9CA5001A5160 /* IntroductionSKScene.swift */,
 				5DAD1F97202A2612001A5160 /* FirstSKScene.swift */,
 				5D77EAE5202565430030F310 /* SKMultilineLabels.swift */,
 				5D4BEB8B201F9F1A0008BCE8 /* SCNode+Text.swift */,
@@ -287,6 +290,7 @@
 				5DAD1F98202A2612001A5160 /* FirstSKScene.swift in Sources */,
 				5D3517D4201C14C2006A9A07 /* ViewController.swift in Sources */,
 				5D3517D0201C14C1006A9A07 /* AppDelegate.swift in Sources */,
+				5DAD1F9A202A9CA5001A5160 /* IntroductionSKScene.swift in Sources */,
 				5D77EAE22024E9920030F310 /* SKTextureGradient.swift in Sources */,
 				5D77EAE6202565430030F310 /* SKMultilineLabels.swift in Sources */,
 			);

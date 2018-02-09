@@ -8,11 +8,18 @@
 
 import Foundation
 import SpriteKit
-
+protocol finishSKSceneDelegate:class {
+    func completedFirstScene()
+    func completedIntroductionScene()
+  
+}
 class FirstSKScene:SKScene{
     var textNode:SKMultilineLabel!
     var sprite:SKSpriteNode!
     var backRectangle:SKShapeNode!
+    var rectangle:SKShapeNode!
+    
+ weak var delgate:finishSKSceneDelegate?
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -27,7 +34,8 @@ class FirstSKScene:SKScene{
     
     func createskScene(){
         
-        self.addChild(createRectangle())
+        rectangle = createRectangle()
+        self.addChild(rectangle)
         sprite = createSpriteLine()
         self.addChild(sprite)
         
@@ -41,30 +49,9 @@ class FirstSKScene:SKScene{
         
         animateSprite(sprite: sprite){
             
-            
             self.animatelabelNode(labelNode: self.textNode){
                 
-                self.backRectangle = self.createBackRect()
-                
-                
-                self.addChild(self.backRectangle)
-                self.sprite.zPosition = 1
-                
-                self.textNode.zPosition = 0
-                let actionMove = SKAction.moveTo(x: 160, duration: 1.0)
-                let actionMoveRect = SKAction.moveTo(x: 135, duration: 1.0)
-                ///let actionLarge = SKAction.scaleX(to: 50, duration: 1.8)
-                //let waitAction = SKAction.wait(forDuration: 0.4)
-                let actionSmall = SKAction.resize(toHeight: 0, duration: 0.8)
-                let actionSequence = SKAction.sequence([actionMove,actionSmall])
-                
-                self.backRectangle.run(actionMoveRect)
-                //let actionSeq = SKAction.sequence([waitAction,actionLarge])
-                self.sprite.run(actionSequence)
-                
-                
-                
-                //rectangle.run(actionMove)
+              self.hideAnimationofTextNode()
             }
         }
         
@@ -75,6 +62,37 @@ class FirstSKScene:SKScene{
         
     }
     
+    
+    func hideAnimationofTextNode(){
+        
+        self.backRectangle = self.createBackRect()
+        self.addChild(self.backRectangle)
+        self.sprite.zPosition = 1
+        self.textNode.zPosition = 0
+        
+        
+        let actionMove = SKAction.moveTo(x: 160, duration: 1.0)
+        let actionMoveRect = SKAction.moveTo(x: 135, duration: 1.0)
+        
+        let actionSmall = SKAction.resize(toHeight: 0, duration: 0.8)
+        let actionSequence = SKAction.sequence([actionMove,actionSmall])
+        
+        self.backRectangle.run(actionMoveRect)
+        
+        self.sprite.run(actionSequence, completion: {
+            self.backRectangle.alpha = 0.0
+            self.sprite.alpha = 0.0
+            self.textNode.alpha = 0.0
+            let actionMoveOut = SKAction.moveTo(x: 400, duration: 0.8)
+            self.rectangle.run(actionMoveOut, completion: {
+                
+                self.removeAllChildren()
+              self.delgate?.completedFirstScene()
+            })
+            
+        })
+        
+    }
     
     func animatelabelNode(labelNode:SKMultilineLabel,completion:@escaping ()->Void){
         
