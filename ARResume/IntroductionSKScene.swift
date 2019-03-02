@@ -8,17 +8,30 @@
 
 import Foundation
 import SpriteKit
+import ARKit
+
 
 class IntroductionSKScene: SKScene{
     var rectangle:SKShapeNode!
     var textNode:SKMultilineLabel!
     var sprite:SKSpriteNode!
-    
+    var node:SKNode!
+    var widthOfScene:CGFloat!
+    var heightOfScene:CGFloat!
+    var factorX:CGFloat = 1
+    var factorY:CGFloat = 1
+    var resumeNode:SKShapeNode!
     
     override init(size: CGSize) {
         super.init(size: size)
         self.backgroundColor = .black
         
+        
+        widthOfScene = 180
+        heightOfScene = 160
+        
+        factorX = 200/widthOfScene
+        factorY = 200/heightOfScene
         createskScene()
     }
     
@@ -27,15 +40,23 @@ class IntroductionSKScene: SKScene{
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+ 
+    
     func createskScene(){
-        
+        node = SKNode()
+        resumeNode = SKShapeNode(rect: CGRect(x: 0, y: 0, width: widthOfScene, height: -800), cornerRadius: 2)
+        resumeNode.fillColor = .black
+        resumeNode.strokeColor = .black
+        resumeNode.alpha = 0.4
         rectangle = createRectangle()
-        self.addChild(rectangle)
+        self.node?.addChild(resumeNode)
+        self.resumeNode.addChild(rectangle)
         
         
-        textNode = SKMultilineLabel(text:"I have 4+ years of professional experience in the development. I have worked on native as well as on hybrid mobile application. Wide experience from e-commerce to on demand service Application.", labelWidth:150, pos:CGPoint(x:150,y:120), fontName:"San Fransisco",fontSize:9,fontColor:UIColor.white, alignment: .left)
+        textNode = SKMultilineLabel(text:"I have 4+ years of professional experience in the development. I have worked on native as well as on hybrid mobile application. Wide experience from e-commerce to on demand service Application.", labelWidth:Int(widthOfScene-80/factorX), pos:CGPoint(x:widthOfScene-60/factorX,y:heightOfScene-80/factorY), fontName:"San Fransisco",fontSize:5,fontColor:UIColor.white, alignment: .left)
         
-        self.addChild(textNode)
+        self.node?.addChild(textNode)
         textNode.alpha = 1.0
         
 //        let Image = UIImage(named:"user-image")
@@ -47,14 +68,14 @@ class IntroductionSKScene: SKScene{
 //
         
         var image = UIImage(named:"user-image")
-        image = image?.scaleImage(toSize: CGSize(width:20,height:30))
+        image = image?.scaleImage(toSize: CGSize(width:20*widthOfScene/200,height:30*heightOfScene/200))
        // print(image?.size)
         let imageNode = SKSpriteNode(imageNamed: "user-image")
         let factor:CGFloat = 1.0
         imageNode.size = CGSize(width: (image?.size.width)! * factor, height: (image?.size.height)! * factor)
-        imageNode.position = CGPoint(x: 50, y: 130)
+        imageNode.position = CGPoint(x: widthOfScene-150/factorX, y: heightOfScene-70/factorY)
         imageNode.zPosition = 0
-        self.addChild(imageNode)
+        self.node?.addChild(imageNode)
 //
         
 //        let tile = SKSpriteNode(imageNamed: "user-image")
@@ -69,7 +90,7 @@ class IntroductionSKScene: SKScene{
 //        mask.zPosition = 2
 //        mask.name = "mask node"
 //        cropNode.maskNode = mask
-//        self.addChild(cropNode)
+//        self.node?.addChild(cropNode)
 //        cropNode.addChild(tile)
 //
 //        let imageNode = SKShapeNode(rect: CGRect(x: 20, y: 80, width: 60, height: 50), cornerRadius: 10)
@@ -80,26 +101,26 @@ class IntroductionSKScene: SKScene{
 //        imageNode.alpha = 1.0
         
   
-        //self.addChild(cropNode)
+        //self.node?.addChild(cropNode)
         
         
         let nameRect = SKLabelNode(text:"Jasmeet Kaur")
         nameRect.fontName = "San Fransisco"
-        nameRect.fontSize = 14
+        nameRect.fontSize = 14*widthOfScene/200
         nameRect.fontColor = UIColor.white
-        nameRect.position = CGPoint(x:110,y:160)
+        nameRect.position = CGPoint(x:widthOfScene-90/factorX,y:heightOfScene-40/factorY)
         nameRect.verticalAlignmentMode = .center
         nameRect.zPosition = 2
  
-        let backRect = SKSpriteNode(color:#colorLiteral(red: 0, green: 0.7333333333, blue: 0.3882352941, alpha: 1),size:CGSize(width:120,height:30))
-        backRect.position = CGPoint(x:120,y:160)
+        let backRect = SKSpriteNode(color:#colorLiteral(red: 0, green: 0.7333333333, blue: 0.3882352941, alpha: 1),size:CGSize(width:widthOfScene-80/factorX,height:30*widthOfScene/200))
+        backRect.position = CGPoint(x:widthOfScene-80/factorX,y:heightOfScene-40/factorY)
         backRect.alpha = 0.4
         backRect.zPosition = 1
         
         
-        self.addChild(backRect)
+        self.node?.addChild(backRect)
     
-        self.addChild(nameRect)
+        self.node?.addChild(nameRect)
         
         
         
@@ -107,7 +128,7 @@ class IntroductionSKScene: SKScene{
     
     func createRectangle()->SKShapeNode{
         
-        let rectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 200, height: 200), cornerRadius: 10)
+        let rectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: widthOfScene, height: heightOfScene), cornerRadius: 2)
         rectangle.fillColor = SKColor.black
         rectangle.strokeColor = SKColor.black
         //rectangle.fillTexture = SKTexture.init(image: UIImage(named: "blurred_background")!)

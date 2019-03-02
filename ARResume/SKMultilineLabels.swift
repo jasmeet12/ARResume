@@ -38,7 +38,7 @@ class SKMultilineLabel: SKNode {
         self.fontName = fontName
         self.fontSize = fontSize
         self.fontColor = fontColor
-        self.leading = leading ?? Int(fontSize+5.0)
+        self.leading = leading ?? Int(fontSize+1.0)
         self.shouldShowBorder = shouldShowBorder
         self.alignment = alignment
         

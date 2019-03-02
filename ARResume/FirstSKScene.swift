@@ -18,13 +18,25 @@ class FirstSKScene:SKScene{
     var sprite:SKSpriteNode!
     var backRectangle:SKShapeNode!
     var rectangle:SKShapeNode!
+    var node:SKNode?
+    var widthOfScene:CGFloat!
+    var heightOfScene:CGFloat!
+    var factorX:CGFloat = 1
+    var factorY:CGFloat = 1
+    
     
  weak var delgate:finishSKSceneDelegate?
     
     override init(size: CGSize) {
         super.init(size: size)
         self.backgroundColor = .clear
+        node = SKNode()
+    
+        widthOfScene = 180
+        heightOfScene = 160
         
+        factorX = 200/widthOfScene
+        factorY = 200/heightOfScene
         createskScene()
     }
     
@@ -35,15 +47,15 @@ class FirstSKScene:SKScene{
     func createskScene(){
         
         rectangle = createRectangle()
-        self.addChild(rectangle)
+        self.node?.addChild(rectangle)
         sprite = createSpriteLine()
-        self.addChild(sprite)
+        self.node?.addChild(sprite)
         
         
         
-        textNode = SKMultilineLabel(text:"Hello! \n My Name is \n Jasmeet Kaur", labelWidth:180, pos:CGPoint(x:140,y:130), fontName:"San Fransisco",fontSize:16,fontColor:UIColor.white, alignment: .left)
+        textNode = SKMultilineLabel(text:"Hello! \n My Name is \n Jasmeet Kaur", labelWidth:Int(widthOfScene-20/factorX), pos:CGPoint(x:widthOfScene-60/factorX,y:heightOfScene-70/factorY), fontName:"San Fransisco",fontSize:8,fontColor:UIColor.white, alignment: .left)
         
-        self.addChild(textNode)
+        self.node?.addChild(textNode)
         textNode.alpha = 0.0
         
         
@@ -66,31 +78,46 @@ class FirstSKScene:SKScene{
     func hideAnimationofTextNode(){
         
         self.backRectangle = self.createBackRect()
-        self.addChild(self.backRectangle)
-        self.sprite.zPosition = 1
+        
+        self.rectangle.addChild(self.backRectangle)
+        
+      
+        self.rectangle.zPosition = 0.3
+        self.sprite.zPosition = 0.2
         self.textNode.zPosition = 0
         
         
-        let actionMove = SKAction.moveTo(x: 160, duration: 1.0)
-        let actionMoveRect = SKAction.moveTo(x: 135, duration: 1.0)
+        let actionMove = SKAction.moveTo(x: widthOfScene, duration: 1.0)
+        let actionMoveRect = SKAction.moveTo(x:widthOfScene, duration: 1.8)
+        
+        let scaleAction = SKAction.scaleX(to: 200, duration: 1.0)
         
         let actionSmall = SKAction.resize(toHeight: 0, duration: 0.8)
         let actionSequence = SKAction.sequence([actionMove,actionSmall])
         
-        self.backRectangle.run(actionMoveRect)
+         let waitAction = SKAction.wait(forDuration: 0.4)
         
-        self.sprite.run(actionSequence, completion: {
+        
+        self.backRectangle.alpha = 0.0
+        self.backRectangle.run(actionMoveRect,completion: {
+
             self.backRectangle.alpha = 0.0
-            self.sprite.alpha = 0.0
-            self.textNode.alpha = 0.0
-            let actionMoveOut = SKAction.moveTo(x: 400, duration: 0.8)
-            self.rectangle.run(actionMoveOut, completion: {
-                
-                self.removeAllChildren()
-              self.delgate?.completedFirstScene()
-            })
+                                self.sprite.alpha = 0.0
+                                self.textNode.alpha = 0.0
+                                let actionMoveOut = SKAction.moveTo(x: self.widthOfScene, duration: 0.8)
+                                self.rectangle.run(actionMoveOut, completion: {
             
+                                    self.removeAllChildren()
+                                    self.delgate?.completedFirstScene()
+                                })
+            
+
+
         })
+//
+      
+        
+        self.sprite.run(actionSequence)
         
     }
     
@@ -118,9 +145,9 @@ class FirstSKScene:SKScene{
         let texture = SKTexture(size: CGSize(width:3, height:10), color1: topColorCi, color2: bottomColorCi, direction: GradientDirection.up)
         texture.filteringMode = .nearest
         
-        let frame = CGRect(x: 185, y: 98, width: 2, height: 0)
+        let frame = CGRect(x: widthOfScene-15/factorX, y: heightOfScene-102/factorY, width: 0.5, height: 0)
         let sprite = SKSpriteNode(texture: texture)
-        sprite.position = CGPoint(x:185, y:98)
+        sprite.position = CGPoint(x:widthOfScene-15/factorX, y:heightOfScene-102/factorY)
         sprite.size = frame.size
         
         
@@ -132,7 +159,7 @@ class FirstSKScene:SKScene{
     
     func createRectangle()->SKShapeNode{
         
-        let rectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 200, height: 200), cornerRadius: 10)
+        let rectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: widthOfScene, height: heightOfScene), cornerRadius: 10*widthOfScene/200)
         rectangle.fillColor = SKColor.black
         rectangle.strokeColor = SKColor.black
         //rectangle.fillTexture = SKTexture.init(image: UIImage(named: "blurred_background")!)
@@ -145,8 +172,8 @@ class FirstSKScene:SKScene{
     func animateSprite(sprite:SKSpriteNode,completion:@escaping ()->Void){
         
         let waitAction = SKAction.wait(forDuration: 0.4)
-        let scaleUpAction = SKAction.resize(toHeight: 100, duration: 0.5)
-        let moveAction = SKAction.moveTo(x: 30, duration: 0.5)
+        let scaleUpAction = SKAction.resize(toHeight: 100*widthOfScene/200, duration: 0.5)
+        let moveAction = SKAction.moveTo(x: 30*widthOfScene/200, duration: 0.5)
         
         let actionSequence = SKAction.sequence([waitAction,scaleUpAction,moveAction])
         
@@ -158,12 +185,15 @@ class FirstSKScene:SKScene{
     }
     
     func createBackRect()->SKShapeNode{
-        let rectangle = SKShapeNode(rect: CGRect(x: -154, y: 0, width: 180, height: 200), cornerRadius: 10)
+        let rectangle = SKShapeNode(rect: CGRect(x:-widthOfScene+28*widthOfScene/200 , y: 0, width:widthOfScene  , height: heightOfScene), cornerRadius:0)
         rectangle.fillColor = SKColor.black
         rectangle.strokeColor = SKColor.black
+        rectangle.zPosition = 0.6
         //rectangle.fillTexture = SKTexture.init(image: UIImage(named: "blurred_background")!)
-        rectangle.lineWidth = 5
+        //rectangle.lineWidth = 5
         rectangle.alpha = 1.0
+        
+        
         
         return rectangle
         

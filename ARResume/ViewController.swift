@@ -11,15 +11,23 @@ import SceneKit
 import ARKit
 
 
-
-class ViewController: UIViewController, ARSCNViewDelegate,finishSKSceneDelegate {
+enum screenType{
+    
+    case First
+    case Introduction
+    
+}
+class ViewController: UIViewController, ARSKViewDelegate,finishSKSceneDelegate, ARSessionDelegate {
     
     
 
-    @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet var sceneView: ARSKView!
     var scene:SCNScene!
     var plane:SCNPlane!
-    var node:SCNNode!
+   // var node:SCNNode!
+    var currentScreenType:screenType = .First
+    var anchor:ARAnchor!
+    var node:SKNode!
   //
     
     override func viewDidLoad() {
@@ -27,76 +35,116 @@ class ViewController: UIViewController, ARSCNViewDelegate,finishSKSceneDelegate 
         
         // Set the view's delegate
         sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        sceneView.session.delegate = self
+       
         
         // Create a new scene
-        createSceneKitScene()
+        //createSceneKitScene()
         
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Create a session configuration
+        let configuration = ARWorldTrackingConfiguration()
+        
+        // Run the view's session
+        sceneView.session.run(configuration)
+        
+      
+        //sceneView.session.add(anchor: <#T##ARAnchor#>)
+        createFirstScene()
+    }
+
+    
+
+    
+    // MARK: - ARSessionDelegate
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        print(#function, sceneView.session.currentFrame)
+        guard (anchor == nil) else {
+            return
+        }
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -0.5
+         translation.columns.3.x = -0.1
+          translation.columns.3.y = -0.1
+        let transform = simd_mul((sceneView.session.currentFrame?.camera.transform)!, translation)
+        
+        anchor = ARAnchor(transform: transform)
+        sceneView.session.add(anchor: anchor)
+        
+    }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+////        if anchors.count > 1 {
+////            startBouncing()
+////            return
+////        }
+//
+//        if let currentFrame = sceneView.session.currentFrame {
+//            var translation = matrix_identity_float4x4
+//            translation.columns.3.z = -0.3
+//            let transform = simd_mul(currentFrame.camera.transform, translation)
+//
+//            let anchor = ARAnchor(transform: transform)
+//            sceneView.session.add(anchor: anchor)
+//            //anchors.append(anchor)
+//        }
+//    }
+   
+    
+    func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
+        // Create and configure a node for the anchor added to the view's
+        // session.
+//        let labelNode = SKLabelNode(text: "👾")
+//        labelNode.horizontalAlignmentMode = .center
+//        labelNode.verticalAlignmentMode = .center
+//        return labelNode;
+        
+        switch currentScreenType {
+        case .Introduction:
+            let introScene = IntroductionSKScene(size: CGSize(width:120,height:100))
+            introScene.scaleMode = .resizeFill
+
+            return introScene.node
+        default:
+            let firstSkScene = FirstSKScene(size: CGSize(width:120,height:100))
+            firstSkScene.delgate = self
+            firstSkScene.scaleMode = .resizeFill
+           // node = firstSkScene.node
+            return firstSkScene.node
+        }
+    }
+
     
     func createFirstScene(){
         
         
         
-       let firstSkScene = FirstSKScene(size: CGSize(width: 200, height: 200))
+       let firstSkScene = FirstSKScene(size:  CGSize(width:120,height:100))
         firstSkScene.delgate = self
-        
-        let material = SCNMaterial()
-        material.isDoubleSided = true
-        material.diffuse.contents = firstSkScene
-        material.diffuse.contentsTransform = SCNMatrix4MakeScale(1,-1,1);
-        material.diffuse.wrapT = SCNWrapMode.repeat
-        plane.materials = [material]
-        
-        node = SCNNode(geometry: plane)
-        node.position = SCNVector3(x:0,y:0,z:-0.6)
-        scene.rootNode.addChildNode(node)
-        
-        //plane.materials.first?.diffuse.contents = firstSkScene
-        //createskScene(skScene: skScene)
-       
+
+        firstSkScene.scaleMode = .resizeFill
+        sceneView.presentScene(firstSkScene)
         
     }
     
-    func createSceneKitScene(){
-        
-        scene = SCNScene()
-        plane = SCNPlane(width: 0.35, height: 0.25)
-        
-       
-        //labelNode.run(SKAction.repeat(SKAction.rotate(byAngle: .pi, duration: 2), count: 1))
-        sceneView.scene = scene
-        
-        createFirstScene()
-        
-    }
-    
+ 
     func createIntroductionScene(){
         
-        let introScene = IntroductionSKScene(size: CGSize(width: 200, height: 200))
-        let material = SCNMaterial()
-        material.isDoubleSided = true
-        material.diffuse.contents = introScene
-        material.diffuse.contentsTransform = SCNMatrix4MakeScale(1,-1,1);
-        material.diffuse.wrapT = SCNWrapMode.repeat
-        plane.materials = [material]
-        
-        node = SCNNode(geometry: plane)
-        node.position = SCNVector3(x:0,y:0,z:-0.6)
-        scene.rootNode.addChildNode(node)
-      
-        
-        
-        
-        
+        let introScene = IntroductionSKScene(size:  CGSize(width:120,height:100))
+        introScene.scaleMode = .resizeFill
+        //self.node = introScene.node
+        anchor = nil
+        sceneView.presentScene(introScene)
         
     }
     
     func completedFirstScene() {
+        currentScreenType = .Introduction
         createIntroductionScene()
     }
     
@@ -105,15 +153,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,finishSKSceneDelegate 
     }
    
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
-        sceneView.session.run(configuration)
-    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
